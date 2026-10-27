@@ -1,0 +1,101 @@
+:root {
+  --bg: #fffaf3;
+  --card: #ffffff;
+  --text: #2b2420;
+  --muted: #7a6e66;
+  --accent: #e8590c;
+  --accent-soft: #fff0e6;
+  --line: #eadfd4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1a18;
+    --card: #282421;
+    --text: #f3ece6;
+    --muted: #a89b91;
+    --accent: #ff8a3d;
+    --accent-soft: #3a2a1f;
+    --line: #3d3631;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  line-height: 1.5;
+}
+
+main { max-width: 480px; margin: 0 auto; padding: 24px 16px 48px; }
+
+h1 { margin: 0; font-size: 28px; }
+h2 { margin: 0 0 12px; font-size: 18px; }
+.sub { margin: 4px 0 0; color: var(--muted); }
+.weather { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
+.hint { color: var(--muted); font-size: 13px; margin: 8px 0; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chips label {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.chips input { display: none; }
+.chips label:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+
+button { font: inherit; cursor: pointer; }
+.spin {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+.spin:disabled { opacity: 0.5; cursor: default; }
+
+.result { min-height: 72px; margin-top: 16px; text-align: center; }
+.result .name { font-size: 30px; font-weight: 800; }
+.result .name.rolling { color: var(--muted); }
+.result .meta { color: var(--muted); font-size: 14px; }
+.result .extra-note { margin-top: 8px; font-size: 14px; color: var(--accent); }
+.result .final { margin-top: 6px; font-weight: 700; color: var(--accent); }
+
+summary { font-weight: 700; cursor: pointer; }
+.menu { list-style: none; padding: 0; margin: 8px 0; }
+.menu li {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 0; border-bottom: 1px solid var(--line);
+}
+.menu .n { flex: 1; }
+.menu .tag { font-size: 12px; color: var(--muted); }
+.menu button { border: 0; background: none; color: var(--muted); font-size: 18px; }
+
+.add { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.add input { flex: 1 1 140px; }
+.add input, .add select, .extra input {
+  padding: 8px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); color: var(--text); font: inherit;
+}
+.add button { padding: 8px 14px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; }
+
+.extra { display: flex; flex-direction: column; gap: 4px; margin-top: 16px; font-size: 14px; color: var(--muted); }
+.link { margin-top: 12px; border: 0; background: none; color: var(--muted); text-decoration: underline; padding: 0; font-size: 13px; }

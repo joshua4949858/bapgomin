@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>고민 끝 한 끼</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>고민 끝 한 끼</h1>
+      <p class="sub">반나절 고민하지 말고, 딱 하나만.</p>
+      <p id="weather" class="weather">날씨 확인 중…</p>
+    </header>
+
+    <section class="card">
+      <h2>오늘은 어떻게 먹을까?</h2>
+      <div id="types" class="chips"></div>
+      <button id="spin" class="spin">골라줘</button>
+      <div id="result" class="result" aria-live="polite"></div>
+      <p id="spins-left" class="hint"></p>
+    </section>
+
+    <details class="card">
+      <summary>내 메뉴판 (<span id="menu-count">0</span>개)</summary>
+      <p class="hint">내가 실제로 먹는 것만 넣어두세요. 싫은 건 안 넣으면 안 나와요.</p>
+      <ul id="menu" class="menu"></ul>
+      <form id="add" class="add">
+        <input id="add-name" placeholder="메뉴 이름" maxlength="30" required>
+        <select id="add-type"></select>
+        <select id="add-mood"></select>
+        <button>추가</button>
+      </form>
+      <label class="extra">
+        편의점 갈 때 같이 살 것
+        <input id="cvs-extra" placeholder="예: 기린 이치방" maxlength="30">
+      </label>
+      <button id="reset-menu" class="link">기본 메뉴판으로 되돌리기</button>
+    </details>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
