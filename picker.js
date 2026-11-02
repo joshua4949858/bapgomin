@@ -61,14 +61,35 @@ export function pick(menu, { types, mood = 'any', shown = [], random = Math.rand
   return pool[pool.length - 1];
 }
 
-export const DEFAULT_MENU = [
-  { id: 'd1', name: '국밥', type: 'delivery', mood: 'warm' },
-  { id: 'd2', name: '짬뽕', type: 'delivery', mood: 'warm' },
-  { id: 'd3', name: '냉면', type: 'delivery', mood: 'cool' },
-  { id: 'd4', name: '치킨', type: 'delivery', mood: 'any' },
-  { id: 'd5', name: '돈까스', type: 'delivery', mood: 'any' },
-  { id: 'c1', name: '삼각김밥 + 컵라면', type: 'cvs', mood: 'warm' },
-  { id: 'c2', name: '편의점 도시락', type: 'cvs', mood: 'any' },
-  { id: 'c3', name: '샌드위치 + 롤케이크', type: 'cvs', mood: 'cool' },
-  { id: 'h1', name: '라면', type: 'home', mood: 'warm' },
-];
+// 메뉴 이름만 보고 종류와 날씨 성향을 짐작한다. 사용자가 고친 값이 우선이다.
+const COOL_WORDS = ['냉면', '냉모밀', '밀면', '비빔면', '비빔국수', '모밀', '메밀', '소바', '물회', '콩국수', '샐러드', '빙수', '아이스', '샌드위치'];
+const WARM_WORDS = ['국', '탕', '찌개', '전골', '라면', '짬뽕', '우동', '칼국수', '마라', '어묵', '수제비', '죽', '해장', '샤브'];
+const NOT_WARM = ['탕수육', '비빔면'];
+const CVS_WORDS = ['편의점', '삼각김밥', '도시락', '컵라면', '컵밥', '핫바', '롤케이크', '샌드위치'];
+const HOME_WORDS = ['집', '라면', '짜파게티', '비빔면', '냉동', '햇반', '즉석'];
+
+const has = (name, words) => words.some((w) => name.includes(w));
+
+export function guessCategory(rawName) {
+  const name = rawName.replace(/\s+/g, '');
+  let mood = 'any';
+  if (has(name, COOL_WORDS) || (name.includes('냉') && !name.includes('냉동'))) mood = 'cool';
+  else if (has(name, WARM_WORDS) && !has(name, NOT_WARM)) mood = 'warm';
+
+  let type = 'delivery';
+  if (has(name, CVS_WORDS)) type = 'cvs';
+  else if (has(name, HOME_WORDS)) type = 'home';
+  return { type, mood };
+}
+
+const DEFAULT_NAMES = {
+  delivery: ['국밥', '짬뽕', '냉면', '치킨', '돈까스', '김치찌개', '부대찌개', '마라탕', '쌀국수', '칼국수',
+    '밀면', '떡볶이', '피자', '햄버거', '초밥', '제육덮밥', '짜장면', '족발', '탕수육', '우동'],
+  cvs: ['삼각김밥 + 컵라면', '편의점 도시락', '샌드위치 + 롤케이크', '컵밥', '핫바 + 컵라면', '편의점 냉모밀'],
+  home: ['라면', '짜파게티', '비빔면', '냉동만두'],
+};
+
+// 기본 메뉴판은 이름만 적고 종류·성향은 위 규칙으로 정한다.
+export const DEFAULT_MENU = Object.entries(DEFAULT_NAMES).flatMap(([type, names]) =>
+  names.map((name, i) => ({ id: `${type[0]}${i + 1}`, name, type, mood: guessCategory(name).mood }))
+);

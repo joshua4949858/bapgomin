@@ -1,4 +1,4 @@
-import { pick, weatherMood, describeWeather, MAX_SPINS, TYPES, MOODS, DEFAULT_MENU } from './picker.js';
+import { pick, weatherMood, describeWeather, MAX_SPINS, TYPES, MOODS, DEFAULT_MENU, guessCategory } from './picker.js';
 import { loadWeather } from './weather.js';
 
 const $ = (id) => document.getElementById(id);
@@ -115,6 +115,16 @@ function setupForm() {
   for (const [k, v] of Object.entries(MOODS)) $('add-mood').add(new Option(v, k));
   $('add-mood').value = 'any';
 
+  // 이름을 치면 종류와 성향을 짐작해서 채운다. 직접 바꾼 칸은 건드리지 않는다.
+  const touched = { type: false, mood: false };
+  $('add-type').addEventListener('change', () => { touched.type = true; });
+  $('add-mood').addEventListener('change', () => { touched.mood = true; });
+  $('add-name').addEventListener('input', () => {
+    const guess = guessCategory($('add-name').value);
+    if (!touched.type) $('add-type').value = guess.type;
+    if (!touched.mood) $('add-mood').value = guess.mood;
+  });
+
   $('add').addEventListener('submit', (e) => {
     e.preventDefault();
     const name = $('add-name').value.trim();
@@ -122,6 +132,7 @@ function setupForm() {
     menu = [...menu, { id: `u${Date.now()}`, name, type: $('add-type').value, mood: $('add-mood').value }];
     store.set('menu', menu);
     $('add-name').value = '';
+    touched.type = touched.mood = false;
     renderMenu();
   });
 
