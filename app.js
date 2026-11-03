@@ -20,7 +20,6 @@ const store = {
 
 let menu = store.get('menu', DEFAULT_MENU);
 let types = store.get('types', Object.keys(TYPES));
-let cvsExtra = store.get('cvsExtra', '');
 let mood = 'any';
 let shown = []; // 이번에 이미 나온 메뉴 id
 let rolling = false;
@@ -75,11 +74,8 @@ function showResult(item) {
   $('result').innerHTML = `
     <div class="name"></div>
     <div class="meta">${TYPES[item.type]}</div>
-    ${item.type === 'cvs' && cvsExtra ? '<div class="extra-note"></div>' : ''}
     ${isFinal ? '<div class="final">더 고민 금지. 이거 드세요!</div>' : ''}`;
   $('result').querySelector('.name').textContent = item.name;
-  const note = $('result').querySelector('.extra-note');
-  if (note) note.textContent = `${cvsExtra} 떨어졌으면 같이 사기`;
 }
 
 function spin() {
@@ -134,12 +130,6 @@ function setupForm() {
     $('add-name').value = '';
     touched.type = touched.mood = false;
     renderMenu();
-  });
-
-  $('cvs-extra').value = cvsExtra;
-  $('cvs-extra').addEventListener('input', () => {
-    cvsExtra = $('cvs-extra').value.trim();
-    store.set('cvsExtra', cvsExtra);
   });
 
   $('reset-menu').addEventListener('click', () => {

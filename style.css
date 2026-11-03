@@ -76,7 +76,6 @@ button { font: inherit; cursor: pointer; }
 .result .name { font-size: 30px; font-weight: 800; }
 .result .name.rolling { color: var(--muted); }
 .result .meta { color: var(--muted); font-size: 14px; }
-.result .extra-note { margin-top: 8px; font-size: 14px; color: var(--accent); }
 .result .final { margin-top: 6px; font-weight: 700; color: var(--accent); }
 
 summary { font-weight: 700; cursor: pointer; }
@@ -91,11 +90,10 @@ summary { font-weight: 700; cursor: pointer; }
 
 .add { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .add input { flex: 1 1 140px; }
-.add input, .add select, .extra input {
+.add input, .add select {
   padding: 8px; border: 1px solid var(--line); border-radius: 8px;
   background: var(--bg); color: var(--text); font: inherit;
 }
 .add button { padding: 8px 14px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; }
 
-.extra { display: flex; flex-direction: column; gap: 4px; margin-top: 16px; font-size: 14px; color: var(--muted); }
 .link { margin-top: 12px; border: 0; background: none; color: var(--muted); text-decoration: underline; padding: 0; font-size: 13px; }
