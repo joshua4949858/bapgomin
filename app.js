@@ -1,5 +1,5 @@
-import { pick, weatherMood, describeWeather, MAX_SPINS, TYPES, MOODS, DEFAULT_MENU, guessCategory } from './picker.js';
-import { loadWeather } from './weather.js';
+import { pick, weatherMood, describeWeather, MAX_SPINS, TYPES, MOODS, DEFAULT_MENU, guessCategory } from './picker.js?v=4';
+import { loadWeather } from './weather.js?v=4';
 
 const $ = (id) => document.getElementById(id);
 

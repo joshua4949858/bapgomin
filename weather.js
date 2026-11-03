@@ -5,6 +5,8 @@ const SEOUL = { lat: 37.5665, lon: 126.978 };
 function getPosition() {
   return new Promise((resolve) => {
     if (!navigator.geolocation) return resolve(null);
+    // 위치 허용 창에 답을 안 하면 브라우저가 계속 기다리므로 10초 뒤엔 위치 없이 진행
+    setTimeout(() => resolve(null), 10000);
     navigator.geolocation.getCurrentPosition(
       (p) => resolve({ lat: p.coords.latitude, lon: p.coords.longitude }),
       () => resolve(null), // 권한 거부나 실패
